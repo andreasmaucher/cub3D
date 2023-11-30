@@ -75,10 +75,15 @@ void	dda_calculation(t_mdata *data)
 						data->ray.camerax;
 	data->ray.raydiry = data->ray.diry + data->ray.plany * \
 						data->ray.camerax;
+	// mapx and mapy represent the current square of the map the ray is in
 	data->ray.mapx = (int)data->ray.posx;
 	data->ray.mapy = (int)data->ray.posy;
+	// distx and disty the distance the ray has to travel to go from 1 x-side to the next x-side 
+	// or from 1 y-side to the next y-side
+	// to avoid division by zero set it to a very high value
 	if (data->ray.raydirx == 0)
 		data->ray.deltadistx = 1e30;
+	// fabs returns absolute value of floating points
 	else
 		data->ray.deltadistx = fabs(1 / data->ray.raydirx);
 	if (data->ray.raydiry == 0)
@@ -87,11 +92,15 @@ void	dda_calculation(t_mdata *data)
 		data->ray.deltadisty = fabs(1 / data->ray.raydiry);
 }
 
+// prepares the necessary parameters for the drawing loop based on the direction
+// of the rays and the distances to the next sides (walls)
 void	step_sidedist(t_mdata *data)
 {
+	// this means the ray is pointing to the left
 	if (data->ray.raydirx < 0)
 	{
-		data->ray.stepx = -1;
+		data->ray.stepx = -1; //indicate stepping left
+		// calculate distance to the next x-side
 		data->ray.sidedistx = (data->ray.posx - data->ray.mapx) \
 							* data->ray.deltadistx;
 	}
@@ -101,6 +110,7 @@ void	step_sidedist(t_mdata *data)
 		data->ray.sidedistx = (data->ray.mapx + 1.0 - data->ray.posx) \
 							* data->ray.deltadistx;
 	}
+	// this means the ray is pointing upward
 	if (data->ray.raydiry < 0)
 	{
 		data->ray.stepy = -1;
@@ -116,6 +126,8 @@ void	step_sidedist(t_mdata *data)
 	drawing_loop(data);
 }
 
+// loop that increments the ray with 1 square every time until a wall is hit
+//! for textures we need to know which side was hit
 void	drawing_loop(t_mdata *data)
 {
 	while (data->ray.hit == 0)
@@ -157,23 +169,30 @@ void	drawing_cal(t_mdata *data)
 		data->ray.drawend = data->ray.drawend;
 }
 
+//! probably needs to change for textures!
 int		drawing_function(t_mdata *data)
 {
 	int j;
 	int i;
 
 	j = -1;
+	// calculate the height of the wall to be drawn
 	data->ray.drawend = data->winy - data->ray.drawstart;
 	i = data->ray.drawend;
+	// fill the pixels above the wall with the ceiling color (data->c)
 	while (++j < data->ray.drawstart)
 		data->main_data.addr[j * data->main_data.line_length / 4 +
 			data->ray.x] = data->c;
+	// Fill the pixels of the wall with a specific color (0x00ff6000 in this case)
+	//! replace this constant color with with logic for textures
+	//! based on the rays intersection point with the wall
 	while (++j <= data->ray.drawend)
 	{
 		data->main_data.addr[j * data->main_data.line_length / 4 +
 			data->ray.x] = 0x00ff6000;
 	}
 	j = i;
+	// Fill the pixels below the wall with the floor color (data->f)
 	while (++j < data->winy)
 		data->main_data.addr[j * data->main_data.line_length / 4 +
 			data->ray.x] = data->f;
