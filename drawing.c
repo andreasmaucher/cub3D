@@ -62,6 +62,9 @@ void	dir_vector_init(t_mdata *data)
 	}
 }
 
+// cameraX is the x-coordinate on the camera plane that the current x-coordinate of the screen represents
+// right side is 1, center 0, left -1
+// direction of the ray is calculated as sum of direction vector and part of the plane vector
 void	dda_calculation(t_mdata *data)
 {
 	data->ray.hit = 0;
@@ -180,6 +183,9 @@ int		drawing_function(t_mdata *data)
 int		raycasting(t_mdata *data)
 {
 	data->ray.x = 0;
+	// loop that goes through every x, so there isn't 
+	//a calculation for every pixel of the screen, but only
+	// for every vertical stripe
 	while (data->ray.x < data->winx)
 	{
 		dda_calculation(data);

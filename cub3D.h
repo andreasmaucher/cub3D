@@ -144,6 +144,4 @@ int		key_press(int keycode, t_mdata *data);
 int		handle_resize(int button, int x, int y, t_mdata *data);
 int		change_win(t_mdata *data);
 
-
-
 #endif
