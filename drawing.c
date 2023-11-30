@@ -180,6 +180,7 @@ int		drawing_function(t_mdata *data)
 	data->ray.drawend = data->winy - data->ray.drawstart;
 	i = data->ray.drawend;
 	// fill the pixels above the wall with the ceiling color (data->c)
+	//! what does this thing even do?!
 	while (++j < data->ray.drawstart)
 		data->main_data.addr[j * data->main_data.line_length / 4 +
 			data->ray.x] = data->c;

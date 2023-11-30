@@ -15,6 +15,10 @@
 # define BUFFER_SIZE	4096
 # define MAX_PATH	4096
 # define MAX_SIZE	700
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
+#define TEX_WIDTH 64
+#define TEX_HEIGHT 64
 
 typedef struct		s_idata
 {
@@ -65,6 +69,8 @@ typedef struct		s_ray
 	double			rotspeed;
 	int				x;
 	int				texture;
+	u_int32_t		buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
+	int				texture_arr[8];
 }					t_ray;
 
 typedef struct		s_mdata
