@@ -2,6 +2,9 @@
 
 void	ray_init(t_mdata *data)
 {
+	/* int i;
+	int size; */
+
 	data->ray.posx = (double)data->start_x + 0.5; //center in one grid cell
 	data->ray.posy = (double)data->start_y + 0.5;
 	data->ray.dirx = 0;
@@ -16,7 +19,15 @@ void	ray_init(t_mdata *data)
 	data->main_data.rotate_left = 0;
 	data->ray.movespeed = 0.1;
 	data->ray.rotspeed = 0.0873; //5 * (pi / 180)
-	dir_vector_init(data);
+	// i = 0;
+	// size = 0;
+/* 	while (i < 8)
+	{
+		size = TEX_WIDTH * TEX_HEIGHT;
+		int* textureArray = (int*)malloc(size * sizeof(int));
+		data->ray.texture_arr[i] = *textureArray;
+	}
+	dir_vector_init(data); */
 }
 
 /* The ratio between the length of the direction and the camera plane 

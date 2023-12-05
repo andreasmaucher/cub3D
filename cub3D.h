@@ -69,8 +69,8 @@ typedef struct		s_ray
 	double			rotspeed;
 	int				x;
 	int				texture;
-	u_int32_t		buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
-	int				texture_arr[8];
+	//u_int32_t		buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
+	//int				texture_arr[8];
 }					t_ray;
 
 typedef struct		s_mdata
